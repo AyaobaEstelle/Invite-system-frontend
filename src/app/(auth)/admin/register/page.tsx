@@ -1,7 +1,7 @@
 "use client";
 
-import { AuthForm } from "@/components/admin/AuthForm";
 import { AuthLayout } from "@/components/admin/AuthLayout";
+import { ReusableAuthForm } from "@/components/ReusableAuthForm";
 
 export default function AdminRegister() {
   return (
@@ -10,7 +10,7 @@ export default function AdminRegister() {
       subtext="Create your account to Invite and manage employees."
       imageUrl="https://i.postimg.cc/0yb5zS7V/istockphoto-614211848-612x612.jpg"
     >
-      <AuthForm type="register" />
+      <ReusableAuthForm type="signup" />
     </AuthLayout>
   );
 }

@@ -1,0 +1,9 @@
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: "admin" | "employee";
+  createdAt: string;
+  updatedAt: string;
+  used?: boolean;
+}
