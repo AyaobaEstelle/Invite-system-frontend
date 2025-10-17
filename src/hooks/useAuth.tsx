@@ -7,7 +7,7 @@ import { loginUserSchema, userSchema } from "@/lib/schema.utils";
 import { LoginProp } from "@/types/auth.types";
 import useApi from "./useApi";
 
-const useAuth = (type: string, user_type?: string) => {
+const useAuth = (type: string, user_type: "admin" | "employee" = "admin") => {
   const router = useRouter();
   const loginAdminControl = useForm<LoginProp>({
     resolver: joiResolver(loginUserSchema),
@@ -21,38 +21,42 @@ const useAuth = (type: string, user_type?: string) => {
   const id = params?.id || params?.token;
 
   const loginOrRegisterFunc = async (credentials: LoginProp) => {
-    const response =
-      user_type == "employee"
-        ? await JOL_BASE_URL.post(`/invites/${id}/use`, credentials)
-        : await JOL_BASE_URL.post(`/auth/${type}`, credentials);
+    let endpoint = `/auth/${type}`;
+
+    if (user_type === "employee" && type === "signup" && id) {
+      endpoint = `/invites/${id}/use`;
+    }
+
+    const response = await JOL_BASE_URL.post(endpoint, credentials);
     return response.data;
   };
 
   const loginOrRegisterMutation = useMutation({
     mutationFn: loginOrRegisterFunc,
     onSuccess: (data) => {
-      const isLoggedInUserAnEmployee = data?.user_role?.includes("employee");
-
       toast.success(`${type} successful`);
+      localStorage.setItem("auth-token", data?.token);
 
-      localStorage.setItem(`auth-token`, data?.token);
       if (isTypeLogin) {
-        if (isLoggedInUserAnEmployee) {
+        if (user_type === "employee") {
           setTimeout(() => router.push("/employee/dashboard"), 2000);
-          return;
+        } else {
+          setTimeout(() => router.push("/admin/dashboard"), 2000);
         }
-
-        setTimeout(() => router.push("/admin/dashboard"), 2000);
-        return;
+      } else {
+        if (user_type === "employee") {
+          setTimeout(() => router.push("/employee/login"), 2000);
+        } else {
+          setTimeout(() => router.push("/admin/login"), 2000);
+        }
       }
-      setTimeout(() => router.push("/admin/login"), 2000);
     },
-    onError: (error: { response: { data: { message: string } } }) => {
-      const error_message = error.response?.data?.message || "Login failed";
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      isTypeLogin
-        ? loginAdminControl.setError("email", { message: error_message })
-        : registerAdminControl.setError("email", { message: error_message });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
+      const error_message = error?.response?.data?.message || "Login failed";
+      const control = isTypeLogin ? loginAdminControl : registerAdminControl;
+
+      control.setError("email", { message: error_message });
       toast.error(error_message);
     },
   });

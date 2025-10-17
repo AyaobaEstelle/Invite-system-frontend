@@ -7,7 +7,7 @@ export default function EmployeeLogin() {
   return (
     <AuthLayout
       heading="Employee Login"
-      subtext="Log in with your employee account."
+      subtext="Log into your employee account."
       imageUrl="https://i.postimg.cc/SK1001XQ/employee-bg.jpg"
     >
       <AuthForm type="login" />

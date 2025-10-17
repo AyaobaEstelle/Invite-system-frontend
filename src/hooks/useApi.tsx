@@ -1,3 +1,4 @@
+"use client";
 import { BASE_API_URL } from "@/lib/utils";
 import axios from "axios";
 import { useState } from "react";

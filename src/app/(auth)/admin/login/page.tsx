@@ -3,7 +3,7 @@
 import { AuthForm } from "@/components/admin/AuthForm";
 import { AuthLayout } from "@/components/admin/AuthLayout";
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
   return (
     <AuthLayout
       heading="Welcome Back Admin!"

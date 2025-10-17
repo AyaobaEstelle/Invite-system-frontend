@@ -3,6 +3,7 @@
 import useAuth from "@/hooks/useAuth";
 import Button from "../reusables/Button";
 import FormInput from "../FormInput";
+import Link from "next/link";
 
 interface AuthFormProps {
   type: "login" | "signup";
@@ -10,7 +11,7 @@ interface AuthFormProps {
 
 export function AuthForm({ type }: AuthFormProps) {
   const { loginAdminControl, handleSubmitForm, loginOrRegisterMutation } =
-    useAuth(type);
+    useAuth(type, "admin");
 
   return (
     <form
@@ -53,15 +54,13 @@ export function AuthForm({ type }: AuthFormProps) {
       <p className="text-sm text-center text-gray-600">
         {type === "signup"
           ? "Already have an account? "
-          : "Don’t have an account? "}
-        <a
-          href={
-            type === "signup" ? "/auth/admin/login" : "/auth/admin/register"
-          }
+          : "Don't have an account? "}
+        <Link
+          href={type === "signup" ? "/admin/login" : "/admin/register"}
           className="text-blue-700 font-semibold hover:underline"
         >
           {type === "signup" ? "Login" : "Register"}
-        </a>
+        </Link>
       </p>
     </form>
   );
