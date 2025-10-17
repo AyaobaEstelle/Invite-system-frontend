@@ -10,7 +10,7 @@ export default function AdminRegister() {
       subtext="Create your account to Invite and manage employees."
       imageUrl="https://i.postimg.cc/0yb5zS7V/istockphoto-614211848-612x612.jpg"
     >
-      <ReusableAuthForm type="signup" />
+      <ReusableAuthForm type="signup" user_type="admin" />
     </AuthLayout>
   );
 }

@@ -3,6 +3,7 @@
 import useAuth from "@/hooks/useAuth";
 import FormInput from "./FormInput";
 import Button from "./reusables/Button";
+import Link from "next/link";
 
 interface AuthFormProps {
   type: "login" | "signup";
@@ -17,51 +18,55 @@ export function ReusableAuthForm({ type, user_type = "admin" }: AuthFormProps) {
     registerAdminControl,
   } = useAuth(type, user_type);
 
-  const isTypeLogin = type === "login";
+  const isLogin = type === "login";
+  const rolePath = user_type === "admin" ? "admin" : "employee";
+
   return (
     <form
       className="space-y-6"
       onSubmit={
-        isTypeLogin
+        isLogin
           ? loginAdminControl.handleSubmit(handleSubmitForm)
           : registerAdminControl.handleSubmit(handleSubmitForm)
       }
     >
-      {type === "signup" && (
+      {!isLogin && (
         <FormInput
           control={registerAdminControl.control}
           name="name"
           title="Full Name"
         />
       )}
+
       <FormInput
         control={
-          isTypeLogin ? loginAdminControl.control : registerAdminControl.control
+          isLogin ? loginAdminControl.control : registerAdminControl.control
         }
         name="email"
         title="Email"
       />
+
       <FormInput
         control={
-          isTypeLogin ? loginAdminControl.control : registerAdminControl.control
+          isLogin ? loginAdminControl.control : registerAdminControl.control
         }
         name="password"
+        type="password"
         title="Password"
       />
+
       <Button loading={loginOrRegisterMutation.isPending}>
-        {type === "signup" ? "Register" : "Login"}
+        {isLogin ? "Login" : "Register"}
       </Button>
 
       <p className="text-sm text-center text-gray-600">
-        {type === "signup"
-          ? "Already have an account? "
-          : "Don’t have an account? "}
-        <a
-          href={type === "signup" ? "/employee/login" : "/employee/signup"}
+        {isLogin ? "Don't have an account? " : "Already have an account? "}
+        <Link
+          href={isLogin ? `/${rolePath}/register` : `/${rolePath}/login`}
           className="text-blue-700 font-semibold hover:underline"
         >
-          {type === "signup" ? "Login" : "Register"}
-        </a>
+          {isLogin ? "Register" : "Login"}
+        </Link>
       </p>
     </form>
   );
