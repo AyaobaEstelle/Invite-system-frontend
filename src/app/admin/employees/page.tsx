@@ -1,4 +1,5 @@
 "use client";
+
 import AdminTable from "@/components/AdminTable";
 import Spinner from "@/components/reusables/LoadingSpinner";
 import useAdmin from "@/hooks/useAdmin";
@@ -14,14 +15,14 @@ const Employees = () => {
     { name: "Role", value: "role" },
     { name: "Status", value: "status" },
   ];
+
   const { fetchEmployeesQuery } = useAdmin();
-  const employees = fetchEmployeesQuery.data?.map((employees: User) => {
-    return {
-      ...employees,
-      date_joined: dayjs(employees.createdAt).format("DD-MM-YYYY"),
-      status: "Active",
-    };
-  });
+
+  const employees = fetchEmployeesQuery.data?.map((employee: User) => ({
+    ...employee,
+    date_joined: dayjs(employee.createdAt).format("DD-MM-YYYY"),
+    status: "Active",
+  }));
 
   if (fetchEmployeesQuery.isLoading) {
     return (
@@ -30,11 +31,23 @@ const Employees = () => {
       </div>
     );
   }
+
   return (
-    <div>
-      <h1 className="text-2xl font-semibold text-black mt-6 mb-6">Employees</h1>
-      <AdminTable headers={headers} rows={employees} />
+    <div className="p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800">Employees</h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Manage and monitor all registered employees in the system.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+        <AdminTable headers={headers} rows={employees} />
+      </div>
     </div>
   );
 };
+
 export default Employees;
