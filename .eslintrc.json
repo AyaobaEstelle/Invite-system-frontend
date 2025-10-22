@@ -10,7 +10,7 @@
 			{
 				"mode": "full",
 				"type": "shared",
-				"pattern": ["src/assets/**/*", "src/components/**/*", "src/context/**/*", "src/features/**/*", "src/hooks/**/*", "src/lib/**/*"]
+				"pattern": ["src/assets/**/*", "src/components/**/*", "src/context/**/*", "src/features/**/*", "src/hooks/**/*", "src/lib/**/*", "src/types/**/*"]
 			},
 			{
 				"mode": "full",
@@ -41,7 +41,7 @@
 				"rules": [
 					{
 						"from": ["shared"],
-						"allow": ["shared"]
+						"allow": ["shared", "types"]
 					},
 					{
 						"from": ["feature"],
