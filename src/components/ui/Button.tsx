@@ -10,13 +10,13 @@ const Button = ({
   return (
     <button
       type="submit"
-      className="w-full rounded-lg bg-blue-900 py-3 text-white font-medium hover:bg-blue-700 transition shadow-md"
+      className="w-full rounded-lg bg-green-800 py-3 text-white font-medium hover:bg-green-700 transition shadow-md"
     >
       {loading ? (
         <div role="status" className="flex justify-center items-center">
           <svg
             aria-hidden="true"
-            className={`w-4 h-4 text-gray-200 animate-spin  fill-blue-900 `}
+            className={`w-4 h-4 text-gray-200 animate-spin  fill-green-900 `}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

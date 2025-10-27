@@ -1,13 +1,13 @@
 import React, { FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface LabelProps {
+interface FormLabelProps {
   htmlFor?: string;
   children: ReactNode;
   className?: string;
 }
 
-const Label: FC<LabelProps> = ({ htmlFor, children, className }) => {
+const FormLabel: FC<FormLabelProps> = ({ htmlFor, children, className }) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -21,4 +21,4 @@ const Label: FC<LabelProps> = ({ htmlFor, children, className }) => {
   );
 };
 
-export default Label;
+export default FormLabel;

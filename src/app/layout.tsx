@@ -17,8 +17,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Sleeky Programmers",
-  description: "Employee Invite System",
+  title: "Employee Invites System",
+  description: "Streamline employee onboarding with our invite system.",
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

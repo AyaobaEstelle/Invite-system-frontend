@@ -1,12 +1,5 @@
-"use client";
-
-import { Layout } from "@/components/admin/dashboard/Layout";
-import { MainContent } from "@/components/admin/dashboard/Main";
+import { AdminDashboard } from "@/components/features/dashboard/AdminDasboard";
 
 export default function AdminDashboardPage() {
-  return (
-    <Layout>
-      <MainContent />
-    </Layout>
-  );
+  return <AdminDashboard />;
 }

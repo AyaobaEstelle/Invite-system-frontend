@@ -1,9 +1,9 @@
 import { HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute } from "react";
 import { Controller } from "react-hook-form";
-import Label from "./Labels";
-import Input from "./Inputs";
+import Label from "../ui/FormLabel";
+import Input from "../ui/Input";
 
-type FormInputType = {
+type FormFieldType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
   name: string;
@@ -18,7 +18,8 @@ type FormInputType = {
   type?: HTMLInputTypeAttribute;
   autoComplete?: HTMLInputAutoCompleteAttribute;
 };
-const FormInput = ({
+
+const FormField = ({
   control,
   type = "text",
   name,
@@ -30,7 +31,7 @@ const FormInput = ({
   id,
   title,
   disabled,
-}: FormInputType) => {
+}: FormFieldType) => {
   return (
     <Controller
       control={control}
@@ -39,11 +40,14 @@ const FormInput = ({
         fieldState: { error, invalid },
       }) => {
         return (
-          <div className=" w-full">
+          <div className="w-full mb-4">
             {title && (
-              <Label htmlFor={id ?? name}>
+              <Label
+                htmlFor={id ?? name}
+                className="block mb-2 text-sm font-semibold text-gray-600"
+              >
                 {title}
-                {isImportant && <span className="text-red-500">*</span>}
+                {isImportant && <span className="text-red-500 ml-0.5">*</span>}
               </Label>
             )}
             <Input
@@ -55,16 +59,14 @@ const FormInput = ({
               placeholder={placeholder}
               autoComplete={autoComplete}
               disabled={disabled}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
               onBlur={onBlur}
               id={id ?? name}
             />
             {invalid && (
-              <div className="mt-2  text-red-600 text-xs font-medium !mb-2   ">
+              <p className="mt-2 text-xs font-medium text-red-600">
                 {error?.message}
-              </div>
+              </p>
             )}
           </div>
         );
@@ -74,4 +76,4 @@ const FormInput = ({
   );
 };
 
-export default FormInput;
+export default FormField;
