@@ -1,5 +1,14 @@
-import { redirect } from "next/navigation";
+"use client";
 
-export default function HomePage() {
-  redirect("/admin/register");
+import { Content } from "@/components/features/welcome/Content";
+import { CTA } from "@/components/features/welcome/CTA";
+import { PageLayout } from "@/components/layout/WelcomePageLayout";
+
+export default function WelcomePage() {
+  return (
+    <PageLayout>
+      <Content />
+      <CTA />
+    </PageLayout>
+  );
 }

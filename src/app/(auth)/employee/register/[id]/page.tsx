@@ -1,15 +1,16 @@
 "use client";
-import { AuthLayout } from "@/components/employee/AuthLayout";
-import { ReusableAuthForm } from "@/components/ReusableAuthForm";
-import Spinner from "@/components/reusables/LoadingSpinner";
+
+import { AuthLayout } from "@/components/layout/AuthLayout";
+import { EmployeeRegisterForm } from "@/components/features/auth/employee/RegisterForm";
 import useGetInviteCode from "@/hooks/useGetInviteCode";
+import Spinner from "@/components/ui/LoadingSpinner";
 
 export default function EmployeeRegisterPage() {
   const { invite, isLoading, isError } = useGetInviteCode();
 
   if (isLoading) {
     return (
-      <div>
+      <div className="min-h-dvh flex justify-center items-center">
         <Spinner />
       </div>
     );
@@ -23,7 +24,7 @@ export default function EmployeeRegisterPage() {
           </h2>
           <p className="mb-4">
             The invite link you used is either invalid or has expired. Please
-            contact your administrator for a new link.
+            contact your administrator for a new one.
           </p>
         </div>
       </div>
@@ -34,11 +35,14 @@ export default function EmployeeRegisterPage() {
     <AuthLayout
       heading="Employee Registration"
       subtext="Complete your registration using the invite link provided by your admin."
-      imageUrl="https://i.postimg.cc/SK1001XQ/employee-bg.jpg"
+      imageUrl="https://i.postimg.cc/FKBrfdXK/Employee-bg.avif"
     >
-      <div className="my-8">Valid Invite Code: {invite?.invite?.token}</div>
+      <div className="my-8 text-sm text-gray-600 text-center">
+        Valid Invite Code:{" "}
+        <span className="font-semibold">{invite?.invite?.token}</span>
+      </div>
 
-      <ReusableAuthForm type="signup" user_type="employee" />
+      <EmployeeRegisterForm />
     </AuthLayout>
   );
 }

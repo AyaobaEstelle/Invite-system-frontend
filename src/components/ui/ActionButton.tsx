@@ -5,6 +5,7 @@ interface ButtonProps {
   loading?: boolean;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  className?: string;
 }
 
 const ActionButton = ({
@@ -12,21 +13,22 @@ const ActionButton = ({
   loading,
   onClick,
   type = "button",
+  className = "",
 }: ButtonProps) => {
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={loading}
-      className={`w-fit px-3 rounded-lg bg-blue-900 py-3 text-white font-medium hover:bg-blue-700 transition shadow-md ${
-        loading ? "opacity-70 cursor-not-allowed" : ""
-      }`}
+      className={`w-fit px-3 py-3 rounded-lg text-white font-medium transition shadow-md 
+        ${loading ? "opacity-70 cursor-not-allowed" : ""}
+        ${className || "bg-green-700 hover:bg-green-800"}`}
     >
       {loading ? (
         <div role="status" className="flex justify-center items-center">
           <svg
             aria-hidden="true"
-            className="w-4 h-4 text-gray-200 animate-spin fill-blue-900"
+            className="w-4 h-4 text-gray-200 animate-spin fill-current"
             viewBox="0 0 100 101"
             xmlns="http://www.w3.org/2000/svg"
           >
