@@ -3,6 +3,8 @@
 import React from "react";
 import { tasks } from "@/components/data/taskDummy";
 import { DashboardLayout } from "@/components/layout/dashboard/Layout";
+import { Heading } from "@/components/ui/typography/Heading";
+import { Text } from "@/components/ui/typography/Text";
 
 export default function AdminTasksPage() {
   const getStatusBadge = (status: string) => {
@@ -25,13 +27,15 @@ export default function AdminTasksPage() {
 
   return (
     <DashboardLayout role="admin">
-      <div className="p-8 max-w-7xl mx-auto">
+      <div className="">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Task Overview</h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <Heading level={2} className=" text-green-700">
+              Task Overview
+            </Heading>
+            <Text size="sm" className="mt-2">
               View and manage all assigned tasks
-            </p>
+            </Text>
           </div>
 
           <button className="px-5 py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg shadow hover:bg-green-700 transition">

@@ -1,5 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { Text } from "@/components/ui/typography/Text";
 
 interface FormLabelProps {
   htmlFor?: string;
@@ -9,14 +10,13 @@ interface FormLabelProps {
 
 const FormLabel: FC<FormLabelProps> = ({ htmlFor, children, className }) => {
   return (
-    <label
-      htmlFor={htmlFor}
-      className={twMerge(
-        "mb-1.5 block !text-sm lg:!text-sm font-normal text-gray-700 dark:text-gray-400",
-        className
-      )}
-    >
-      {children}
+    <label htmlFor={htmlFor} className={twMerge("block mb-1.5", className)}>
+      <Text
+        size="base"
+        className="font-medium text-gray-700 dark:text-gray-400"
+      >
+        {children}
+      </Text>
     </label>
   );
 };

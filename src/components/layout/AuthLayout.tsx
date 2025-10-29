@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import React from "react";
+import { Heading } from "../ui/typography/Heading";
+import { Text } from "../ui/typography/Text";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -28,20 +30,24 @@ export function AuthLayout({
           />
           <div className="absolute inset-0 bg-green-900/60"></div>
           <div className="relative text-center text-white pb-10 px-6">
-            <h2 className="text-2xl font-semibold">Welcome to Sleeky</h2>
+            <Heading level={2} className="text-white">
+              Welcome to Sleeky
+            </Heading>
             <hr className="my-3 mx-auto w-14 border-white/70" />
-            <p className="text-base max-w-md mx-auto text-white">
+            <Text size="base" className="max-w-md mx-auto text-white">
               Join our team and grow together, where great work meets purpose.
-            </p>
+            </Text>
           </div>
         </div>
 
         <div className="w-full lg:w-1/2 flex flex-col justify-center p-10 bg-white">
           <div className="w-full max-w-md mx-auto text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-green-900 mb-2">
+            <Heading level={2} className="mb-2">
               {heading}
-            </h1>
-            <p className="text-gray-600 text-sm mb-8">{subtext}</p>
+            </Heading>
+            <Text size="sm" className="mb-8">
+              {subtext}
+            </Text>
 
             {children}
           </div>

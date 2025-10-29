@@ -4,12 +4,14 @@ import InviteTable from "@/components/features/dashboard/InvitesTable";
 import { DashboardLayout } from "@/components/layout/dashboard/Layout";
 import ActionButton from "@/components/ui/ActionButton";
 import Spinner from "@/components/ui/LoadingSpinner";
+import { Heading } from "@/components/ui/typography/Heading";
 import useAdmin from "@/hooks/useAdmin";
 import useApi from "@/hooks/useApi";
 import { User } from "@/types/admin.types";
 import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
+import { Text } from "@/components/ui/typography/Text";
 
 export default function AdminInvitationsPage() {
   const { JOL_BASE_URL } = useApi();
@@ -54,13 +56,15 @@ export default function AdminInvitationsPage() {
 
   return (
     <DashboardLayout role="admin">
-      <div className="space-y-8">
+      <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-semibold text-black">Invitations</h1>
-            <p className="text-sm text-gray-500">
+            <Heading level={2} className="mt-4 text-green-700">
+              Invitations
+            </Heading>
+            <Text size="sm" className="mt-2">
               Generate new employee invitation links.
-            </p>
+            </Text>
           </div>
 
           <div className="flex items-center gap-3">
@@ -77,9 +81,9 @@ export default function AdminInvitationsPage() {
 
         {inviteLink && (
           <div className="bg-gradient-to-r from-green-50 to-green-100 border border-green-200 text-green-800 p-5 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
-            <p className="font-medium text-green-900 mb-1">
+            <Text size="sm" className="font-medium mb-1">
               New Invite Link Generated:
-            </p>
+            </Text>
             <a
               href={inviteLink}
               target="_blank"
@@ -93,12 +97,12 @@ export default function AdminInvitationsPage() {
 
         <div className="bg-white rounded-2xl shadow-md p-6 border border-green-100">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-green-800">
-              Recent Invites
-            </h2>
-            <span className="text-sm text-gray-500">
+            <Heading level={3} className="font-semibold">
+              All Invites
+            </Heading>
+            <Text size="sm" className="">
               Total: {invites.length || 0}
-            </span>
+            </Text>
           </div>
 
           <InviteTable headers={headers} rows={invites} />

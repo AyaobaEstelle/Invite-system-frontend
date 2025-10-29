@@ -13,6 +13,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import clsx from "clsx";
+import { Heading } from "@/components/ui/typography/Heading";
 
 interface SidebarProps {
   open: boolean;
@@ -70,9 +71,10 @@ export function Sidebar({ open, onClose, role }: SidebarProps) {
       >
         <div>
           <div className="flex items-center justify-between p-6 border-b border-green-700">
-            <h1 className="text-xl font-semibold">
+            <Heading level={4} className=" text-white">
               {role === "admin" ? "Admin Panel" : "Employee Panel"}
-            </h1>
+            </Heading>
+
             <button onClick={onClose} className="lg:hidden">
               <X className="w-5 h-5" />
             </button>

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute } from "react";
 import { Controller } from "react-hook-form";
 import Label from "../ui/FormLabel";
 import Input from "../ui/Input";
+import { Text } from "@/components/ui/typography/Text";
 
 type FormFieldType = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
   name: string;
   id?: string;
@@ -42,14 +43,12 @@ const FormField = ({
         return (
           <div className="w-full mb-4">
             {title && (
-              <Label
-                htmlFor={id ?? name}
-                className="block mb-2 text-sm font-semibold text-gray-600"
-              >
+              <Label htmlFor={id ?? name}>
                 {title}
                 {isImportant && <span className="text-red-500 ml-0.5">*</span>}
               </Label>
             )}
+
             <Input
               value={value}
               className={className}
@@ -63,10 +62,11 @@ const FormField = ({
               onBlur={onBlur}
               id={id ?? name}
             />
+
             {invalid && (
-              <p className="mt-2 text-xs font-medium text-red-600">
+              <Text size="sm" className="mt-2 font-medium text-red-600">
                 {error?.message}
-              </p>
+              </Text>
             )}
           </div>
         );

@@ -3,6 +3,8 @@
 import { DashboardLayout } from "@/components/layout/dashboard/Layout";
 import Spinner from "@/components/ui/LoadingSpinner";
 import useGetInviteCode from "@/hooks/useGetInviteCode";
+import { Text } from "@/components/ui/typography/Text";
+import { Heading } from "@/components/ui/typography/Heading";
 
 export default function SingleInvitePage() {
   const { invite, isLoading, isError } = useGetInviteCode();
@@ -21,9 +23,9 @@ export default function SingleInvitePage() {
     return (
       <DashboardLayout role="admin">
         <div className="flex justify-center items-center min-h-dvh">
-          <p className="text-red-600 font-medium text-lg">
+          <Text className="text-red-600 font-medium">
             Error: This invite link has already been used or is invalid.
-          </p>
+          </Text>
         </div>
       </DashboardLayout>
     );
@@ -33,15 +35,17 @@ export default function SingleInvitePage() {
     <DashboardLayout role="admin">
       <div className="flex justify-center items-center min-h-dvh">
         <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md text-center">
-          <h2 className="text-xl font-semibold text-gray-800 mb-3">
+          <Heading level={4} className=" text-gray-800 mb-3">
             Invitation Active
-          </h2>
-          <p className="text-gray-600">
+          </Heading>
+          <Text size="base" className="text-gray-600">
             This invitation link is valid and ready to use.
-          </p>
-          <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200 text-blue-800">
-            <p>Invite Code:</p>
-            <p className="font-semibold break-all">{invite?.code}</p>
+          </Text>
+          <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-green-200 text-green-800">
+            <Text>Invite Code:</Text>
+            <Text size="base" className="break-all">
+              {invite?.code}
+            </Text>
           </div>
         </div>
       </div>

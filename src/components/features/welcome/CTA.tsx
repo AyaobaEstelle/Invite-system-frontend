@@ -1,8 +1,8 @@
 "use client";
 
-import { WelcomeButton } from "@/components/ui/WelcomeButton";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/components/ui/Link";
+import { WelcomeButton } from "@/components/ui/WelcomeButton";
 
 export function CTA() {
   return (

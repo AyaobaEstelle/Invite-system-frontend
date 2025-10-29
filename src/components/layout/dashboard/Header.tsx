@@ -1,5 +1,6 @@
 "use client";
 
+import { Heading } from "@/components/ui/typography/Heading";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 
@@ -15,9 +16,9 @@ export function Header({ onMenuClick, role }: HeaderProps) {
         <Menu className="w-6 h-6 text-green-700" />
       </button>
 
-      <h2 className="text-lg font-semibold text-green-800 capitalize">
+      <Heading level={2} className="capitalize mt-4">
         {role === "admin" ? "Admin Dashboard" : "Employee Dashboard"}
-      </h2>
+      </Heading>
 
       <div className="flex items-center space-x-4">
         <span className="text-green-700 capitalize">{role}</span>

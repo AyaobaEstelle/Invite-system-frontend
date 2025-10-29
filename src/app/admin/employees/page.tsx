@@ -9,6 +9,8 @@ import Spinner from "@/components/ui/LoadingSpinner";
 import useAdmin from "@/hooks/useAdmin";
 import { User } from "@/types/admin.types";
 import { DashboardLayout } from "@/components/layout/dashboard/Layout";
+import { Heading } from "@/components/ui/typography/Heading";
+import { Text } from "@/components/ui/typography/Text";
 
 const Employees = () => {
   const headers = [
@@ -37,20 +39,20 @@ const Employees = () => {
 
   return (
     <DashboardLayout role="admin">
-      <div className="p-4 sm:p-6">
+      <div className="">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-3 sm:space-y-0">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+            <Heading level={2} className="mt-4 text-green-700">
               Employees
-            </h1>
-            <p className="text-gray-500 text-sm mt-1">
+            </Heading>
+            <Text size="sm" className="mt-2">
               Manage and monitor all registered employees in the system.
-            </p>
+            </Text>
           </div>
 
           <Link
             href="/admin/invites"
-            className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm w-full sm:w-auto"
+            className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm w-full sm:w-auto"
           >
             <Plus size={18} />
             Add Employee

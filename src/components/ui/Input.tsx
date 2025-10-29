@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { FC, HTMLInputAutoCompleteAttribute } from "react";
+import { Text } from "@/components/ui/typography/Text";
 
 interface InputProps {
   type?: "text" | "number" | "email" | "password" | "date" | "time" | string;
@@ -6,9 +8,7 @@ interface InputProps {
   name?: string;
   placeholder?: string;
   defaultValue?: string | number;
-  // eslint-disable-next-line no-unused-vars
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // eslint-disable-next-line no-unused-vars
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   min?: string;
@@ -80,8 +80,9 @@ const Input: FC<InputProps> = ({
       />
 
       {!invalid && hint && (
-        <p
-          className={`mt-1.5 text-[11px] ${
+        <Text
+          size="sm"
+          className={`mt-1.5 ${
             error
               ? "text-red-500"
               : success
@@ -90,7 +91,7 @@ const Input: FC<InputProps> = ({
           }`}
         >
           {hint}
-        </p>
+        </Text>
       )}
     </div>
   );

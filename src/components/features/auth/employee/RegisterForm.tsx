@@ -4,6 +4,7 @@ import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import FormField from "@/components/form/FormField";
 import Button from "@/components/ui/Button";
+import { Text } from "@/components/ui/typography/Text";
 
 export function EmployeeRegisterForm() {
   const { registerAdminControl, handleSubmitForm, loginOrRegisterMutation } =
@@ -46,12 +47,12 @@ export function EmployeeRegisterForm() {
         <Button loading={loginOrRegisterMutation.isPending}>Register</Button>
       </div>
 
-      <p className="mt-4 text-sm text-center text-green-800/80">
+      <Text size="xs" className="mt-4 text-center">
         Already have an account?{" "}
         <Link href="/employee/login" className="font-semibold underline">
           Login
         </Link>
-      </p>
+      </Text>
     </form>
   );
 }
