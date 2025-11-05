@@ -1,11 +1,16 @@
 "use client";
 
-import AdminTable from "@/components/AdminTable";
-import Spinner from "@/components/reusables/LoadingSpinner";
+import React from "react";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import dayjs from "dayjs";
+import AdminTable from "@/components/features/dashboard/InvitesTable";
+import Spinner from "@/components/ui/LoadingSpinner";
 import useAdmin from "@/hooks/useAdmin";
 import { User } from "@/types/admin.types";
-import dayjs from "dayjs";
-import React from "react";
+import { DashboardLayout } from "@/components/layout/dashboard/Layout";
+import { Heading } from "@/components/ui/typography/Heading";
+import { Text } from "@/components/ui/typography/Text";
 
 const Employees = () => {
   const headers = [
@@ -26,27 +31,39 @@ const Employees = () => {
 
   if (fetchEmployeesQuery.isLoading) {
     return (
-      <div className="min-h-dvh flex justify-center items-center">
+      <div className="min-h-screen flex justify-center items-center bg-gray-50">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800">Employees</h1>
-          <p className="text-gray-500 text-sm mt-1">
-            Manage and monitor all registered employees in the system.
-          </p>
+    <DashboardLayout role="admin">
+      <div className="">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-3 sm:space-y-0">
+          <div>
+            <Heading level={2} className="mt-4 text-green-700">
+              Employees
+            </Heading>
+            <Text size="sm" className="mt-2">
+              Manage and monitor all registered employees in the system.
+            </Text>
+          </div>
+
+          <Link
+            href="/admin/invites"
+            className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm w-full sm:w-auto"
+          >
+            <Plus size={18} />
+            Add Employee
+          </Link>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 overflow-x-auto">
+          <AdminTable headers={headers} rows={employees ?? []} />
         </div>
       </div>
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <AdminTable headers={headers} rows={employees} />
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

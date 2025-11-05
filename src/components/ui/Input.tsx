@@ -1,15 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React, { FC, HTMLInputAutoCompleteAttribute } from "react";
+import { Text } from "@/components/ui/typography/Text";
 
 interface InputProps {
   type?: "text" | "number" | "email" | "password" | "date" | "time" | string;
   id?: string;
   name?: string;
-
   placeholder?: string;
   defaultValue?: string | number;
-  // eslint-disable-next-line no-unused-vars
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // eslint-disable-next-line no-unused-vars
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   min?: string;
@@ -44,17 +43,21 @@ const Input: FC<InputProps> = ({
   error = false,
   hint,
 }) => {
-  let inputClasses =
-    (className = `w-full rounded-lg border border-gray-300 p-3 text-sm shadow-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-200 ${className}`);
+  let inputClasses = `
+    w-full rounded-lg border border-gray-200 bg-white 
+    p-3 text-sm text-gray-800 placeholder-gray-400 
+    shadow-sm transition duration-150 ease-in-out
+    focus:outline-none focus:ring-1 focus:ring-green-100 focus:border-green-100
+    hover:border-green-300
+    ${className}
+  `;
 
   if (disabled) {
-    inputClasses += ` !bg-gray-300  !text-gray-500 font-bold border-gray-300 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700`;
-  } else if (error) {
-    inputClasses += ` text-error-800 border-error-500 focus:ring-3 focus:ring-error-500/10  dark:text-error-400 dark:border-error-500`;
+    inputClasses += ` bg-gray-100 text-gray-500 cursor-not-allowed`;
+  } else if (invalid || error) {
+    inputClasses += ` border-red-500 focus:ring-red-200`;
   } else if (success) {
-    inputClasses += ` text-success-500 border-success-400 focus:ring-success-500/10 focus:border-success-300  dark:text-success-400 dark:border-success-500`;
-  } else {
-    inputClasses += ` bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800`;
+    inputClasses += ` border-green-500 focus:ring-green-200`;
   }
 
   return (
@@ -73,21 +76,22 @@ const Input: FC<InputProps> = ({
         value={value}
         step={step}
         disabled={disabled}
-        className={`${inputClasses} !bg-white`}
+        className={inputClasses}
       />
 
       {!invalid && hint && (
-        <p
-          className={`mt-1.5 text-[11px] ${
+        <Text
+          size="sm"
+          className={`mt-1.5 ${
             error
-              ? "text-error-500"
+              ? "text-red-500"
               : success
-              ? "text-success-500"
+              ? "text-green-600"
               : "text-gray-500"
           }`}
         >
           {hint}
-        </p>
+        </Text>
       )}
     </div>
   );

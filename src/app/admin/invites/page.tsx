@@ -1,25 +1,26 @@
 "use client";
 
-import { Layout } from "@/components/admin/dashboard/Layout";
-import AdminTable from "@/components/AdminTable";
-import ActionButton from "@/components/reusables/ActionButton";
-import Spinner from "@/components/reusables/LoadingSpinner";
+import { useState } from "react";
+import InviteTable from "@/components/features/dashboard/InvitesTable";
+import { DashboardLayout } from "@/components/layout/dashboard/Layout";
+import ActionButton from "@/components/ui/ActionButton";
+import Spinner from "@/components/ui/LoadingSpinner";
+import { Heading } from "@/components/ui/typography/Heading";
+import { Text } from "@/components/ui/typography/Text";
 import useAdmin from "@/hooks/useAdmin";
-import useApi from "@/hooks/useApi";
-import { User } from "@/types/admin.types";
-import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
+import { User } from "@/types/admin.types";
 
 export default function AdminInvitationsPage() {
-  const { JOL_BASE_URL } = useApi();
-
-  const { fetchInvitesQuery } = useAdmin();
+  const { fetchInvitesQuery, generateInviteMutation } = useAdmin();
+  const [email, setEmail] = useState("");
 
   const headers = [
+    { name: "Employee Email", value: "email" },
     { name: "Date Created", value: "date_joined" },
     { name: "Used", value: "used" },
-    { name: "Link", value: "link" },
+    { name: "Invite Link", value: "link" },
   ];
 
   const invites =
@@ -27,18 +28,31 @@ export default function AdminInvitationsPage() {
       ...invite,
       date_joined: dayjs(invite.createdAt).format("DD-MM-YYYY"),
       used: invite.used ? "Yes" : "No",
-      link: `${window.location.origin}/employee/register/${invite?.token}`,
+      email: invite.email,
+      link: `${
+        typeof window !== "undefined" ? window.location.origin : ""
+      }/employee/register/${invite.token}`,
     })) || [];
 
-  const handleGenerateNewInvite = useMutation({
-    mutationFn: async () => {
-      const { data } = await JOL_BASE_URL.post(`/invites`);
-      return data;
-    },
-    onSuccess() {
-      toast.success("Invite link generated successfully");
-    },
-  });
+  const handleGenerateInvite = () => {
+    if (!email) {
+      toast.error("Please enter an email address");
+      return;
+    }
+
+    generateInviteMutation.mutate(email, {
+      onSuccess: () => {
+        toast.success("Invite sent successfully!");
+        fetchInvitesQuery.refetch();
+        setEmail("");
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (err: any) => {
+        const message = err?.response?.data?.message || "Failed to send invite";
+        toast.error(message);
+      },
+    });
+  };
 
   if (fetchInvitesQuery.isLoading) {
     return (
@@ -47,42 +61,51 @@ export default function AdminInvitationsPage() {
       </div>
     );
   }
-  const inviteLink = handleGenerateNewInvite.data?.token
-    ? `${window.location.origin}/employee/register/${handleGenerateNewInvite.data?.token}`
-    : null;
 
   return (
-    <Layout>
-      <div className="space-y-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-gray-800">Invitations</h1>
-          <ActionButton
-            type="submit"
-            loading={handleGenerateNewInvite.isPending}
-            onClick={handleGenerateNewInvite.mutate}
-          >
-            Generate Invite Link
-          </ActionButton>
+    <DashboardLayout role="admin">
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <Heading level={2} className="mt-4 text-green-700">
+              Invitations
+            </Heading>
+            <Text size="sm" className="mt-2">
+              Enter an employee email to send an invitation.
+            </Text>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+            <input
+              type="email"
+              placeholder="employee@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <ActionButton
+              type="button"
+              loading={generateInviteMutation.isPending}
+              onClick={handleGenerateInvite}
+              className="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all shadow-md hover:shadow-lg"
+            >
+              Send Invite
+            </ActionButton>
+          </div>
         </div>
 
-        {inviteLink && (
-          <div className="bg-green-100 border border-green-300 text-green-800 p-3 rounded-lg text-sm">
-            <p className="font-medium">Invite Link Generated:</p>
-            <a
-              href={inviteLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-700 underline break-all"
-            >
-              {inviteLink}
-            </a>
+        <div className="bg-white rounded-2xl shadow-md p-6 border border-green-100">
+          <div className="flex items-center justify-between mb-4">
+            <Heading level={3} className="font-semibold">
+              All Invites
+            </Heading>
+            <Text size="sm" className="">
+              Total: {invites.length || 0}
+            </Text>
           </div>
-        )}
 
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <AdminTable headers={headers} rows={invites} />
+          <InviteTable headers={headers} rows={invites} />
         </div>
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 }

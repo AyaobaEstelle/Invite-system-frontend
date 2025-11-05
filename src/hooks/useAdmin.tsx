@@ -20,9 +20,14 @@ const useAdmin = () => {
     },
   });
 
-  const generateInviteMutation = useMutation({
-    mutationFn: async () => {
-      const { data } = await JOL_BASE_URL.post("/invites/generate");
+  const generateInviteMutation = useMutation<
+    { token: string },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    string
+  >({
+    mutationFn: async (email: string) => {
+      const { data } = await JOL_BASE_URL.post("/invites", { email });
       return data;
     },
   });

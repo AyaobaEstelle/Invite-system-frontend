@@ -1,16 +1,16 @@
 "use client";
 
-import { AuthLayout } from "@/components/admin/AuthLayout";
-import { ReusableAuthForm } from "@/components/ReusableAuthForm";
+import { AdminRegisterForm } from "@/components/features/auth/admin/RegisterForm";
+import { AuthLayout } from "@/components/layout/AuthLayout";
 
-export default function AdminRegister() {
+export default function AdminRegisterPage() {
   return (
     <AuthLayout
-      heading="Create an Admin Account!"
-      subtext="Create your account to Invite and manage employees."
-      imageUrl="https://i.postimg.cc/0yb5zS7V/istockphoto-614211848-612x612.jpg"
+      heading="Create An Admin Account"
+      subtext="Set up your an dmin account and start managing your team."
+      imageUrl="https://i.postimg.cc/W3fGK3vc/Admin.avif"
     >
-      <ReusableAuthForm type="signup" user_type="admin" />
+      <AdminRegisterForm />
     </AuthLayout>
   );
 }
