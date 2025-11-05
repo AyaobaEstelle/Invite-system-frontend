@@ -22,7 +22,7 @@ export function AdminRegisterForm() {
           name="name"
           title="Full Name"
           isImportant
-          placeholder="John Doe"
+          placeholder="Full Name"
         />
 
         <FormField

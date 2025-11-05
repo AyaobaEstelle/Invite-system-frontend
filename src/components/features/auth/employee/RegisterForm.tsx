@@ -1,40 +1,47 @@
 "use client";
 
 import useAuth from "@/hooks/useAuth";
-import Link from "next/link";
 import FormField from "@/components/form/FormField";
 import Button from "@/components/ui/Button";
 import { Text } from "@/components/ui/typography/Text";
 
 export function EmployeeRegisterForm() {
-  const { registerAdminControl, handleSubmitForm, loginOrRegisterMutation } =
-    useAuth("signup", "employee");
+  const {
+    registerEmployeeControl,
+    inviteEmail,
+    handleSubmitForm,
+    loginOrRegisterMutation,
+  } = useAuth("signup", "employee");
 
   return (
     <form
       className="w-full max-w-md bg-white p-6 rounded-xl shadow-sm"
-      onSubmit={registerAdminControl.handleSubmit(handleSubmitForm)}
+      onSubmit={registerEmployeeControl.handleSubmit(handleSubmitForm)}
       noValidate
     >
       <div className="space-y-4">
         <FormField
-          control={registerAdminControl.control}
+          control={registerEmployeeControl.control}
           name="name"
           title="Full Name"
           isImportant
-          placeholder="Jane Doe"
+          placeholder="Full Name"
         />
 
-        <FormField
-          control={registerAdminControl.control}
-          name="email"
-          title="Email Address"
-          isImportant
-          placeholder="you@example.com"
-        />
+        <div className="w-full mb-4">
+          <label className="block mb-1 font-medium text-gray-700">
+            Email Address <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            value={inviteEmail}
+            disabled
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-100 text-gray-700 cursor-not-allowed"
+          />
+        </div>
 
         <FormField
-          control={registerAdminControl.control}
+          control={registerEmployeeControl.control}
           name="password"
           type="password"
           title="Password"
@@ -49,9 +56,9 @@ export function EmployeeRegisterForm() {
 
       <Text size="xs" className="mt-4 text-center">
         Already have an account?{" "}
-        <Link href="/employee/login" className="font-semibold underline">
+        <a href="/employee/login" className="font-semibold underline">
           Login
-        </Link>
+        </a>
       </Text>
     </form>
   );
