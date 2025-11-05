@@ -6,7 +6,7 @@ import Input from "../ui/Input";
 import { Text } from "@/components/ui/typography/Text";
 
 type FormFieldType = {
-  control: any;
+  control?: any;
   name: string;
   id?: string;
   title?: string;
@@ -18,6 +18,7 @@ type FormFieldType = {
   hint?: string;
   type?: HTMLInputTypeAttribute;
   autoComplete?: HTMLInputAutoCompleteAttribute;
+  value?: string;
 };
 
 const FormField = ({
@@ -32,46 +33,67 @@ const FormField = ({
   id,
   title,
   disabled,
+  value,
 }: FormFieldType) => {
+  if (!control) {
+    return (
+      <div className="w-full mb-4">
+        {title && (
+          <Label htmlFor={id ?? name}>
+            {title}
+            {isImportant && <span className="text-red-500 ml-0.5">*</span>}
+          </Label>
+        )}
+
+        <Input
+          value={value ?? ""}
+          className={className}
+          type={type}
+          placeholder={placeholder}
+          disabled={disabled}
+          autoComplete={autoComplete}
+        />
+      </div>
+    );
+  }
+
   return (
     <Controller
       control={control}
+      name={name}
       render={({
         field: { onChange, onBlur, value },
         fieldState: { error, invalid },
-      }) => {
-        return (
-          <div className="w-full mb-4">
-            {title && (
-              <Label htmlFor={id ?? name}>
-                {title}
-                {isImportant && <span className="text-red-500 ml-0.5">*</span>}
-              </Label>
-            )}
+      }) => (
+        <div className="w-full mb-4">
+          {title && (
+            <Label htmlFor={id ?? name}>
+              {title}
+              {isImportant && <span className="text-red-500 ml-0.5">*</span>}
+            </Label>
+          )}
 
-            <Input
-              value={value}
-              className={className}
-              type={type}
-              hint={hint}
-              invalid={invalid}
-              placeholder={placeholder}
-              autoComplete={autoComplete}
-              disabled={disabled}
-              onChange={(e) => onChange(e)}
-              onBlur={onBlur}
-              id={id ?? name}
-            />
+          <Input
+            value={value}
+            className={className}
+            type={type}
+            hint={hint}
+            invalid={invalid}
+            placeholder={placeholder}
+            autoComplete={autoComplete}
+            disabled={disabled}
+            onChange={onChange}
+            onBlur={onBlur}
+            id={id ?? name}
+          />
 
-            {invalid && (
-              <Text size="sm" className="mt-2 font-medium text-red-600">
-                {error?.message}
-              </Text>
-            )}
-          </div>
-        );
-      }}
-      name={name}
+          {invalid && (
+            <Text size="sm" className="mt-2 font-medium text-red-600">
+              {error?.message}
+            </Text>
+          )}
+        </div>
+      )}
     />
   );
 };

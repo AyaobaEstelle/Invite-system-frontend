@@ -7,6 +7,11 @@ export interface RegisterProp extends LoginProp {
   name: string;
 }
 
+export interface EmployeeRegisterProp {
+  name: string;
+  password: string;
+}
+
 export interface User {
   token: string;
   id: string;
